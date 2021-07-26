@@ -1,11 +1,10 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Assign project'
+description: 'Assign project to pull requests'
+author: 'Nicolas Filippelli'
 inputs:
-  milliseconds: # change this
+  PROJECT_COLUMN_ID:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'id of the column from the project to be assigned'
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -1,16 +1,21 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import * as github from '@actions/github'
+import {assignProjectToPr} from './assignProject'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const githubToken = core.getInput('GITHUB_TOKEN', {required: true})
+    const projectColumnId = core.getInput('PROJECT_COLUMN_ID', {required: true})
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    core.info(`GITHUB_EVENT_NAME=${process.env.GITHUB_EVENT_NAME}`)
+    core.info(`GITHUB context action=${github.context.payload.action}`)
 
-    core.setOutput('time', new Date().toTimeString())
+    const octokit = github.getOctokit(githubToken)
+    const gitHubContext = {
+      octokit,
+      context: github.context
+    }
+    await assignProjectToPr(gitHubContext, parseInt(projectColumnId))
   } catch (error) {
     core.setFailed(error.message)
   }
