@@ -5,6 +5,9 @@ inputs:
   PROJECT_COLUMN_ID:
     required: true
     description: 'id of the column from the project to be assigned'
+  GITHUB_TOKEN:
+    description: "User token of service account."
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

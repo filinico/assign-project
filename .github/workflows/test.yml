@@ -21,3 +21,4 @@ jobs:
       - uses: ./
         with:
           PROJECT_COLUMN_ID: 15292708
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
